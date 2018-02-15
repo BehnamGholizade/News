@@ -1,0 +1,17 @@
+﻿@model List<LaserArt.Models.Video>
+@{
+    ViewBag.Title = "Տեսանյութեր";
+}
+
+<h2>Տեսանյութեր</h2>
+@foreach (var video in Model)
+{
+    <hr />
+    if (this.User.IsInRole("Administrator"))
+    {
+        <a href="/home/removeVideo/@video.Id">Ջնջել</a>
+    }
+  
+    <h2 align="center"> @video.Name</h2>
+    <iframe style="width:100%;height:auto;min-height:500px" src="@video.Link.Replace(".com/watch?v=",".com/embed/")"></iframe>
+}

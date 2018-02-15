@@ -1,0 +1,58 @@
+﻿@model LaserArt.Models.Order
+
+<div class="col-md-10"></div>
+<span id="close" onclick="closeDiv()" class="col-md-1 closeX">x</span><br />
+
+@using (Html.BeginForm("OrderDetails", "Home",FormMethod.Post, new { id = "orderForm" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model =>model.ProductId)
+    <div class="form-horizontal">
+
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+       
+
+        <div class="form-group">
+                <p>Ձեր անունը</p>
+                <div class="col-md-1"></div>
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control validateable" } })
+                <p id="textValidationName" class="textValidation"></p>
+                </div>
+            </div>
+        <div class="form-group">
+            <p>Հեռախոսահամար</p>
+            <div class="col-md-1"></div>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
+                <p id="textValidationPhone" class="textValidation"></p>
+                
+            </div>
+        </div>
+
+       @Html.HiddenFor(model=> model.Products)
+        <div class="form-group">
+            <p>Հասցե</p>
+            <div class="col-md-1"></div>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
+                <p id="textValidationAddress" class="textValidation"></p>
+               
+            </div>
+        </div>
+        <div class="form-group">
+            <p>Քանակը</p>
+            <div class="col-md-1"></div>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control" } })
+                <p id="textValidationQuantity" class="textValidation"></p>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-8">
+                <input type="button" onclick="orderSubmitbutton()" value="Պատվիրել" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}

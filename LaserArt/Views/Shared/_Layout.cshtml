@@ -1,0 +1,266 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title - Croissant</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body>
+
+    <div style="width:90%; margin:0 auto;">
+
+        <div class="list-inline top-menu row">
+            
+            <div class="col-md-10" title="Croissant">
+                <a href="/" style="text-decoration:none; color: white;"> <h1>Ameninch.Am</h1></a>
+
+                <p style="font-size:18px; margin-left:15%;">Ամեն ինչ ձեզ համար</p>
+            </div>
+
+
+                   
+                    <div class=" col-md-2">
+                        <div class="inner-addon right-addon">
+                            
+                            <input type="text" id="searchArea" class="form-control" placeholder="Փնտրել..." />
+                        </div>
+                    </div>
+                    <div></div>
+
+                
+            </div>
+        <nav class="navbar navbar-inverse" style="z-index:999999999;">
+            <div class="container-fluid">
+              
+                <ul class="nav navbar-nav">
+                    <li class="active">@Html.ActionLink("Գլխավոր", "Index", "Home")</li>
+
+                    @foreach (var item in ViewBag.ParentCategories)
+                    {
+                        <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="/home/parentcategory/@item.Key.Id">@item.Key.Name <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+@foreach (var cat in item.Value)
+{
+    <li style="background-color:#e9e4e4"><a href="/home/category/@cat.Id">@cat.CategoryName</a></li>
+}
+                        </ul>
+                    </li>
+}
+                    <li>@Html.ActionLink("Տեսանյութ", "Videos", "Home")</li>
+                    <li>@Html.ActionLink("Մեր Մասին", "About", "Home")</li>
+                    <li>@Html.ActionLink("Կապ", "Contact", "Home")</li>
+                    @if (this.User.IsInRole("Administrator"))
+                    {
+                        <li>@Html.ActionLink("Ավելացնել Տեսանյութ", "CreateVideo", "Admin")</li>
+                                    <li>@Html.ActionLink("Ավելացնել Ապրանք", "CreateProduct", "Home")</li>
+                                    <li>@Html.ActionLink("Ավելացնել կատեգորիա", "CreateCategory", "Home")</li>
+                                    <li>@Html.ActionLink("Ավելացնել գլխավոր կատեգորիա", "CreateCategory", "Admin")</li>
+                                    <li>@Html.ActionLink("Պատվերներ", "Order", "Admin")</li>
+                                    @Html.Partial("_LoginPartial")
+                    }
+                </ul>
+            </div>
+        </nav>
+        <div>
+
+            <div class="col-sm-12" style="padding:0 !important;">
+                <div class="container body-content">
+                    @RenderBody()
+
+                    <div align="center" id="orderDetails">
+
+                        Բեռնվում է․․․
+                    </div>
+
+
+                </div>
+                <button onclick="topFunction()" id="myBtn" title="Go to top">^</button>
+            </div>
+            @if (!Request.Browser.IsMobileDevice)
+            {
+                <div class="toolbar" align="center">
+                    <div class="toolbar-right">
+                        <p>
+                            &copy; @DateTime.Now.Year - Croissant Powered by <a href="https://web.facebook.com/novirarm/">Novir</a>
+                        </p>
+                    </div>
+                </div>
+            }
+        </div>
+
+    </div>
+
+    <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+    <script src="https://cloud.tinymce.com/stable/tinymce.min.js"></script>
+    <script>tinymce.init({ selector: '#textarea' });</script>
+    <script type="text/javascript">
+        function orderSubmitbutton() {
+            if ($('#Name').val() == "") {
+                $('#textValidationName').append('Նշեք ձեր անունը');
+                return
+            }
+            if ($('#PhoneNumber').val() == "")
+            {
+                $('#textValidationPhone').append('Նշեք հեռախոսահամարը');
+                return
+            }
+            if ($('#Address').val() == "") {
+                $('#textValidationAddress').append('Նշեք հասցեն');
+                return
+            }
+            
+            if ($('#Quantity').val() == "") {
+                $('#textValidationQuantity').append('Նշեք քանակը');
+                return
+            }
+            $('#orderForm').submit();
+        }
+        window.onscroll = function () { scrollFunction() };
+
+        function scrollFunction() {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                document.getElementById("myBtn").style.display = "block";
+            } else {
+                document.getElementById("myBtn").style.display = "none";
+            }
+        }
+
+        // When the user clicks on the button, scroll to the top of the document
+        function topFunction() {
+            document.body.scrollTop = 0; // For Chrome, Safari and Opera
+            document.documentElement.scrollTop = 0; // For IE and Firefox
+        }
+        function closeDiv() {
+            $("#orderDetails").hide();
+        }
+        $(document).ready(function () {
+           
+            $('#searchArea').bind("enterKey", function (e) {
+                window.location = "/home/Search?query=" + $(this).val();
+            });
+            $('#searchArea').keyup(function (e) {
+                if (e.keyCode == 13) {
+                    $(this).trigger("enterKey");
+                }
+            });
+            $('.item-div').click(function () {
+                 window.location = "/home/parentcategory/" + $(this).attr('id');
+            });
+            $('.item-divCategory').click(function () {
+                window.location = "/home/category/" + $(this).attr('id');
+            });
+            $('.adminOrderRow').click(function () {
+                window.location = "/admin/orderdetails/?OrderId=" + $(this).attr('id');
+            });
+            $('.deleteProduct').click(function () {
+                var id = $(this).attr('id');
+                $.ajax({
+                    url: "/Home/RemoveProduct/" + id,
+                    type: "POST",
+                    processData: false,
+                    contentType: false,
+                    success: function (response) {
+                        //code after success
+                        alert(response);
+                        window.location = "/Home/";
+
+                    },
+                    error: function (er) {
+
+                        alert(er.responseText);
+                    }
+
+                });
+            });
+          
+            $(".fileUpload").click(function () {
+                var parent = $(this).parent();
+                var data = new FormData();
+                var files = $(this).parent().find(".uploadEditorImage").get(0).files;
+                if (files.length > 0) {
+                    data.append("HttpPostedFileBase", files[0]);
+                    $(this).parent().find('.image').val('/images/' + files[0].name)
+                }
+                //.val('/images/' + files[0].name);
+                $.ajax({
+                    url: "/Home/FileUpload/",
+                    type: "POST",
+                    processData: false,
+                    contentType: false,
+                    data: data,
+                    success: function (response) {
+                        //code after success
+                        alert(response)
+                    },
+                    error: function (er) {
+
+                        alert(er.responseText);
+                    }
+
+                });
+            });
+
+        });
+        function categoryHover(itemId) {
+            $("#orderDetails_"+itemId).show();
+        }
+        function categoryClose(itemId) {
+            $("#orderDetails_" + itemId).hide();
+        }
+        function orderBtnClickItem(itemId) {
+            $("#orderDetails").show();
+            $('#orderDetails').load("/home/Order/" + itemId);
+           
+                    //         $.ajax({
+                    //    type: 'GET',
+                    //    url: "/home/Order/"+itemId,
+                    //    success: function (data) {
+                    //        alert(data);
+                    //        $('#orderDetails').innerHTML = data;
+                    //    }
+                    //});
+                    }
+
+        function goToDetails()
+        {
+                     $.ajax({
+                type: 'POST',
+                url: '@Url.Content("~/home/OrderDetails")',
+                data: objectToPass,
+                success: function (data) {
+                    $('#orderDetails').innerHTML = data;
+                }
+            });
+        }
+        function openProduct(id)
+        { window.location.href = '/home/product/' + id }
+
+        //$(document).ready(function () {
+        //    $(".iconImg").click(function (event) {
+        //        $('#generalImg').attr('src', $(event.target).attr('src'));
+        //    });
+        //});
+        window.onload = function () {
+           
+        };
+    </script>
+    @*@if (Request.Browser.IsMobileDevice)
+        {
+            <style>
+                .iconImg {
+                    width: 20% !important;
+                    height: auto;
+                    cursor: pointer;
+                }
+            </style>
+        }*@
+
+</body>
+</html>

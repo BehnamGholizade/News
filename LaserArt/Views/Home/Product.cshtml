@@ -1,0 +1,63 @@
+﻿@model LaserArt.Models.Product
+@{
+    ViewBag.Title = "Kayqi anun";
+}
+@if (this.User.IsInRole("Administrator"))
+            {
+    <a class="deleteProduct" id="@Model.Id">Ջնջել</a>
+}
+
+<h2>@Model.ProductTitle</h2>
+<h4 class="col-sm-4">@Html.Raw(Model.ProductDescription)</h4>
+<div class="col-sm-4">
+    <img style="width:100%; height:auto;" src="@Model.ImageSource" />
+</div>
+
+<div id="fb-root"></div>
+<script>
+(function (d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.12';
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+<div class="fb-share-button" data-href="http://recipe001-001-site1.htempurl.com/home/product/@Model.Id" data-layout="button_count" data-size="large" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse">Share</a></div>
+<div style="display:inline-block">
+    <div id="ok_shareWidget"></div>
+    <script>
+        !function (d, id, did, st, title, description, image) {
+            var js = d.createElement("script");
+            js.src = "https://connect.ok.ru/connect.js";
+            js.onload = js.onreadystatechange = function () {
+                if (!this.readyState || this.readyState == "loaded" || this.readyState == "complete") {
+                    if (!this.executed) {
+                        this.executed = true;
+                        setTimeout(function () {
+                            OK.CONNECT.insertShareWidget(id, did, st, title, description, image);
+                        }, 0);
+                    }
+                }
+            };
+            d.documentElement.appendChild(js);
+        }(document, "ok_shareWidget", document.URL, '{"sz":20,"st":"rounded","ck":2,"lang":"hy"}', "Test", "", "");
+    </script>
+</div>
+<div style="display:inline-block">
+    <!-- Put this script tag to the <head> of your page -->
+    <script type="text/javascript" src="https://vk.com/js/api/share.js?95" charset="windows-1251"></script>
+
+    <!-- Put this script tag to the place, where the Share button will be -->
+    <script type="text/javascript">
+<!--
+document.write(VK.Share.button(false,{type: "round", text: "Կիսվել"}));
+--></script>
+</div>
+<div style="display:inline-block"><a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></div>
+<div style="display:inline-block"><script src="https://apis.google.com/js/platform.js" async defer></script>
+<g:plusone></g:plusone>
+</div>
+<br />
+<br />
+<br />

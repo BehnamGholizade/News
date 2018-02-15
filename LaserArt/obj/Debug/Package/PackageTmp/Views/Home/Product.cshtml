@@ -1,0 +1,14 @@
+﻿@model LaserArt.Models.Product
+@{
+    ViewBag.Title = "Product";
+}
+@if (this.User.IsInRole("Administrator"))
+            {
+    <a class="deleteProduct" id="@Model.Id">Ջնջել</a>
+}
+
+<h2>@Model.ProductTitle</h2>
+<div align="center">
+    <img style="width:50%; height:auto;" src="@Model.ImageSource" />
+</div>
+<h4>@Model.ProductDescription</h4>

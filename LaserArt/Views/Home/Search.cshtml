@@ -1,0 +1,68 @@
+﻿@model List<LaserArt.Models.Product>
+
+@{
+    ViewBag.Title = "Փնտրել";
+}
+
+<div class="jumbotron" style="padding:0 !important;">
+    <div class="container">
+        @if (!Request.Browser.IsMobileDevice)
+        {
+
+            @*<div class="col-md-3">
+                <img src="~/images/Logo.png" class="mainlogo" />
+            </div>*@
+        }
+        else
+        {
+            @*<div class="col-md-12">
+                <img src="~/images/Logo.png" class="mainlogo" />
+            </div>*@
+        }
+    </div>
+</div>
+<div class="container jumbotron" style="padding-top:5px !important;">
+    <div class="row" align="left">
+       Որոնման արդյունքները
+    </div>
+    <hr />
+    @{
+        var count = 0;
+    }
+    @foreach (var item in Model)
+    {
+        if (count % 3 == 0 && count == 0)
+        {
+            @Html.Raw("<div class=\"row\" id=\"" + count + "\">");
+        }
+
+        <div class="col-md-4">
+            @if (this.User.IsInRole("Administrator"))
+            {
+                <a href="/home/editproduct/@item.Id">Փոփոխել</a>
+            }
+            <div class="row product" id="@item.Id" style="font-size:12px; padding:5px; margin-bottom:20px;">
+                <div class="col-md-8 ">
+                    <img style="width:100%; height:auto;" src="@item.ImageSource" />
+                    <p>#@item.Id @item.ProductTitle</p>
+                    <p style="display:inline">
+                        
+                        @if (@item.PriceDiscounted != 0)
+                        {
+                            <del style="display:inline"> @item.PriceDiscounted</del>
+                        }
+                    </p>
+
+                </div>
+            </div>
+        </div>
+        if (count % 3 == 0 && count == 0)
+        {
+            Html.Raw("</div>");
+
+        }
+        count++;
+
+    }
+</div>
+<script src="~/Scripts/carousel.js"></script>
