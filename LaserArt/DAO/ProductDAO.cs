@@ -30,6 +30,7 @@ namespace LaserArt.DAO
                         command.Parameters.AddWithValue("@ProductTitle", newProduct.ProductTitle);
                         command.Parameters.AddWithValue("@ProductDescription", newProduct.ProductDescription);
                         command.Parameters.AddWithValue("@ImageSource", newProduct.ImageSource);
+                        command.Parameters.AddWithValue("@VideoSource", newProduct.VideoSource);
                         command.Parameters.AddWithValue("@ImageSource1", newProduct.ImageSource1);
                         command.Parameters.AddWithValue("@ImageSource2", newProduct.ImageSource2);
                         command.Parameters.AddWithValue("@ImageSource3", newProduct.ImageSource3);
@@ -72,6 +73,8 @@ namespace LaserArt.DAO
                             newProduct.ProductTitle = rdr["ProductTitle"].ToString();
                             newProduct.ProductDescription = rdr["ProductDescription"].ToString();
                             newProduct.ImageSource = rdr["ImageSource"].ToString();
+                            newProduct.VideoSource = rdr["VideoSource"].ToString();
+
                             newProduct.ImageSource1 = rdr["ImageSource1"].ToString();
                             newProduct.ImageSource2 = rdr["ImageSource2"].ToString();
                             newProduct.ImageSource3 = rdr["ImageSource3"].ToString();
@@ -113,6 +116,7 @@ namespace LaserArt.DAO
                             newProduct.ProductTitle = rdr["ProductTitle"].ToString();
                             newProduct.ProductDescription = rdr["ProductDescription"].ToString();
                             newProduct.ImageSource = rdr["ImageSource"].ToString();
+                            newProduct.VideoSource = rdr["VideoSource"].ToString();
 
                             newProduct.ImageSource1 = rdr["ImageSource1"].ToString();
                             newProduct.ImageSource2 = rdr["ImageSource2"].ToString();
@@ -154,6 +158,8 @@ namespace LaserArt.DAO
                             newProduct.ProductTitle = rdr["ProductTitle"].ToString();
                             newProduct.ProductDescription = rdr["ProductDescription"].ToString();
                             newProduct.ImageSource = rdr["ImageSource"].ToString();
+                            newProduct.VideoSource = rdr["VideoSource"].ToString();
+
                             newProduct.ImageSource1 = rdr["ImageSource1"].ToString();
                             newProduct.ImageSource2 = rdr["ImageSource2"].ToString();
                             newProduct.ImageSource3 = rdr["ImageSource3"].ToString();
@@ -193,6 +199,7 @@ namespace LaserArt.DAO
                             newProduct.Id = Convert.ToInt32(rdr["Id"]);
                             newProduct.ProductTitle = rdr["ProductTitle"].ToString();
                             newProduct.ProductDescription = rdr["ProductDescription"].ToString();
+                            newProduct.VideoSource = rdr["VideoSource"].ToString();
 
                             newProduct.ImageSource1 = rdr["ImageSource1"].ToString();
                             newProduct.ImageSource2 = rdr["ImageSource2"].ToString();

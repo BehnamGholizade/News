@@ -12,11 +12,13 @@
     <div style="width:90%; margin:0 auto;">
 
         <div class="list-inline top-menu row">
-            
-            <div class="col-md-10" title="Croissant">
-                <a href="/" style="text-decoration:none; color: white;"> <h1>Ameninch.Am</h1></a>
+            <div class="col-sm-1">
+                <img src="~/images/planet-earth-clipart-earth-rotation-10.gif" />
+            </div>
+            <div class="col-sm-8" title="Croissant">
+                <a href="/" style="text-decoration:none; color: white;"> <h1>Հասարակած</h1></a>
 
-                <p style="font-size:18px; margin-left:15%;">Ամեն ինչ ձեզ համար</p>
+                <b style="font-size:18px; margin-left:15%;">Լրատվական կայք</b>
             </div>
 
 
@@ -31,7 +33,7 @@
 
                 
             </div>
-        <nav class="navbar navbar-inverse" style="z-index:999999999;">
+        <nav class="navbar navbar-inverse" style="z-index:999999999; background-color: white; border-color: black;">
             <div class="container-fluid">
               
                 <ul class="nav navbar-nav">
@@ -49,9 +51,9 @@
                         </ul>
                     </li>
 }
-                    <li>@Html.ActionLink("Տեսանյութ", "Videos", "Home")</li>
+                    
                     <li>@Html.ActionLink("Մեր Մասին", "About", "Home")</li>
-                    <li>@Html.ActionLink("Կապ", "Contact", "Home")</li>
+                    
                     @if (this.User.IsInRole("Administrator"))
                     {
                         <li>@Html.ActionLink("Ավելացնել Տեսանյութ", "CreateVideo", "Admin")</li>
@@ -79,12 +81,14 @@
                 </div>
                 <button onclick="topFunction()" id="myBtn" title="Go to top">^</button>
             </div>
+            <div><p style="color:white;">©Hasarakats.com - Հրապարակումների մասնակի կամ ամբողջական օգտագործման դեպքում հղումը Hasarakats.com-ին պարտադիր է: Կայքում արտահայտված կարծիքները պարտադիր չէ, որ համընկնեն խմբագրության տեսակետի հետ: Գովազդների բովանդակության համար կայքը պատասխանատվություն չի կրում:</p></div>
+            <br />
             @if (!Request.Browser.IsMobileDevice)
             {
                 <div class="toolbar" align="center">
                     <div class="toolbar-right">
                         <p>
-                            &copy; @DateTime.Now.Year - Croissant Powered by <a href="https://web.facebook.com/novirarm/">Novir</a>
+                            &copy; @DateTime.Now.Year - Հասարակած Powered by <a href="https://web.facebook.com/novirarm/">Novir</a>
                         </p>
                     </div>
                 </div>
