@@ -37,6 +37,7 @@ namespace LaserArt.DAO
                         command.Parameters.AddWithValue("@CategoryId", newProduct.CategoryId);
                         command.Parameters.AddWithValue("@Price", newProduct.Price);
                         command.Parameters.AddWithValue("@PriceDiscounted", newProduct.PriceDiscounted);
+                        command.Parameters.AddWithValue("@isSlide", newProduct.isSlide);
 
                         command.ExecuteNonQuery();
                         return newProduct;
@@ -49,6 +50,51 @@ namespace LaserArt.DAO
                 }
             }
         }
+
+        internal static List<Product> getSlides()
+        {
+            using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+            {
+                using (SqlCommand command = new SqlCommand("sp_GetSlideProducts", sqlConnection))
+                {
+                    try
+                    {
+                        sqlConnection.Open();
+                        command.CommandType = CommandType.StoredProcedure;
+
+                        SqlDataReader rdr = command.ExecuteReader();
+                        List<Product> newProductList = new List<Product>();
+                        while (rdr.Read())
+                        {
+                            Product newProduct = new Product();
+                            newProduct.Id = Convert.ToInt32(rdr["Id"]);
+                            newProduct.ProductTitle = rdr["ProductTitle"].ToString();
+                            newProduct.ProductDescription = rdr["ProductDescription"].ToString();
+                            newProduct.ImageSource = rdr["ImageSource"].ToString();
+                            newProduct.VideoSource = rdr["VideoSource"].ToString();
+
+                            newProduct.ImageSource1 = rdr["ImageSource1"].ToString();
+                            newProduct.ImageSource2 = rdr["ImageSource2"].ToString();
+                            newProduct.ImageSource3 = rdr["ImageSource3"].ToString();
+                            newProduct.Price = Convert.ToDecimal(rdr["Price"]);
+                            newProduct.PriceDiscounted = rdr["PriceDiscounted"] == DBNull.Value ? 0 : Convert.ToDecimal(rdr["PriceDiscounted"]);
+                            newProduct.CategoryId = Convert.ToInt32(rdr["CategoryId"]);
+                            newProduct.isSlide = Convert.ToBoolean(rdr["isSlide"]);
+
+                            newProductList.Add(newProduct);
+                        }
+                        return newProductList;
+                    }
+                    catch (Exception ex)
+                    {
+                        throw ex;
+                    }
+                }
+
+            }
+
+        }
+
         public static List<Product> getProducts(int? id)
         {
 
@@ -81,6 +127,7 @@ namespace LaserArt.DAO
                             newProduct.Price =Convert.ToDecimal(rdr["Price"]);
                             newProduct.PriceDiscounted = rdr["PriceDiscounted"]==DBNull.Value? 0:Convert.ToDecimal(rdr["PriceDiscounted"]);
                             newProduct.CategoryId = Convert.ToInt32(rdr["CategoryId"]);
+                            newProduct.isSlide = Convert.ToBoolean(rdr["isSlide"]);
 
                             newProductList.Add(newProduct);
                         }
@@ -124,6 +171,7 @@ namespace LaserArt.DAO
                             newProduct.Price = Convert.ToDecimal(rdr["Price"]);
                             newProduct.CategoryId = Convert.ToInt32(rdr["CategoryId"]);
                             newProduct.PriceDiscounted = rdr["PriceDiscounted"]==DBNull.Value? 0:Convert.ToDecimal(rdr["PriceDiscounted"]);
+                            newProduct.isSlide = Convert.ToBoolean(rdr["isSlide"]);
 
                             newProductList.Add(newProduct);
                         }
@@ -166,7 +214,7 @@ namespace LaserArt.DAO
                             newProduct.Price = Convert.ToDecimal(rdr["Price"]);
                             newProduct.CategoryId = Convert.ToInt32(rdr["CategoryId"]);
                             newProduct.PriceDiscounted = rdr["PriceDiscounted"] == DBNull.Value ? 0 : Convert.ToDecimal(rdr["PriceDiscounted"]);
-
+                            newProduct.isSlide = Convert.ToBoolean(rdr["isSlide"]);
                             newProductList.Add(Convert.ToInt32(rdr["Quantity"]),newProduct);
                         }
                         return newProductList;
@@ -245,5 +293,54 @@ namespace LaserArt.DAO
 
             }
         }
+
+        public static void saveView(int id)
+        {
+
+            using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+            {
+                using (SqlCommand command = new SqlCommand("sp_CreateView", sqlConnection))
+                {
+                    try
+                    {
+                        sqlConnection.Open();
+                        command.CommandType = CommandType.StoredProcedure;
+
+                        command.Parameters.AddWithValue("@ProductId", id);
+                        command.ExecuteNonQuery();
+                    }
+                    catch (Exception ex)
+                    {
+                        throw ex;
+                    }
+                }
+
+            }
+        }
+
+        public static int getView(int id)
+        {
+
+            using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+            {
+                using (SqlCommand command = new SqlCommand("sp_GetViews", sqlConnection))
+                {
+                    try
+                    {
+                        sqlConnection.Open();
+                        command.CommandType = CommandType.StoredProcedure;
+
+                        command.Parameters.AddWithValue("@ProductId", id);
+                       return Convert.ToInt32(command.ExecuteScalar());
+                    }
+                    catch (Exception ex)
+                    {
+                        throw ex;
+                    }
+                }
+
+            }
+        }
+        
     }
 }

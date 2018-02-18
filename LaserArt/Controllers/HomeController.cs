@@ -35,7 +35,7 @@ namespace LaserArt.Controllers
             //var recomended = LaserArt.Models.Product.GetProducts(null).Take(3).ToList();
             //categoryList.Add("Re:Store-Family рекомендует:", recomended);
             var categories = Models.ParentCategory.GetCategories(null);
-
+            ViewBag.Slides = Models.Product.GetSlides();
             // ViewBag.Sales = Models.Sales.GetSalesById(null);
             return View(categories);
         }
@@ -138,6 +138,8 @@ namespace LaserArt.Controllers
         public ActionResult Product(int id)
         {
             var product = LaserArt.Models.Product.GetProducts(id).FirstOrDefault();
+            ViewBag.Views = LaserArt.Models.Product.GetViews(Convert.ToInt32(product.Id));
+            product.SaveView();
             return View(product);
         }
 

@@ -26,6 +26,7 @@ namespace LaserArt.Models
         public string ImageSource1 { get; set; }
         public string ImageSource2 { get; set; }
         public string ImageSource3 { get; set; }
+        public bool isSlide { get; set; }
         [Required]
         public int CategoryId { get; set; }
 
@@ -46,6 +47,12 @@ namespace LaserArt.Models
         {
             return ProductDAO.getProductsByCategoryId(categoryId);
         }
+
+        internal static List<Product> GetSlides()
+        {
+            return ProductDAO.getSlides();
+        }
+
         public static List<Product> GetProductsByQuery(string query)
         {
             return ProductDAO.getProductsByQuery(query);
@@ -53,6 +60,15 @@ namespace LaserArt.Models
         public static Dictionary<int,Product> GetProductsByOrderId(int orderId)
         {
             return ProductDAO.getProductsByOrderId(orderId);
+        }
+        public void SaveView()
+        {
+            ProductDAO.saveView(Convert.ToInt32(this.Id));
+        }
+
+        public static int GetViews(int id)
+        {
+            return ProductDAO.getView(id);
         }
     }
 }

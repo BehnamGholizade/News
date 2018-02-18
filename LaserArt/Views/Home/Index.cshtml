@@ -10,58 +10,57 @@
         {
 
             @*<div class="col-md-3">
-                <img src="~/images/logo_croissant.png" class="mainlogo" />
-            </div>*@
+                    <img src="~/images/logo_croissant.png" class="mainlogo" />
+                </div>*@
             <div class="col-md-9">
 
                 @*<div class="w3-content w3-section">
-                    @foreach (var item in ViewBag.Sales)
-                    {
-                        <a class="mySlides" href="@item.link">
-                            <img class="myslideImage" src="@item.image">
-                        </a>
-                    }
+                        @foreach (var item in ViewBag.Sales)
+                        {
+                            <a class="mySlides" href="@item.link">
+                                <img class="myslideImage" src="@item.image">
+                            </a>
+                        }
 
-                </div>*@
+                    </div>*@
             </div>
         }
         else
         {
             @*<div class="col-md-12">
-                <img src="~/images/logo_croissant.png" class="mainlogo" />
-            </div>*@
+                    <img src="~/images/logo_croissant.png" class="mainlogo" />
+                </div>*@
         }
     </div>
 </div>
 <div class="container">
-    
+
     <div id="myCarousel" class="carousel slide" data-ride="carousel">
         <!-- Indicators -->
         <ol class="carousel-indicators">
-            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-            <li data-target="#myCarousel" data-slide-to="1"></li>
-            <li data-target="#myCarousel" data-slide-to="2"></li>
+            @{
+                int ind = 0;
+                foreach (var prod in ViewBag.Slides)
+                {
+                    <li data-target="#myCarousel" data-slide-to="@ind" class="@(ind == 0 ? "active" : "")"></li>
+                    ind++;
+                }
+            }
         </ol>
 
         <!-- Wrapper for slides -->
         <div class="carousel-inner">
-            <div class="item active">
-                <img src="~/images/15.jpg" style="width:100%;">
-            </div>
+            @{
+                int index = 0;
+                foreach (var prod in ViewBag.Slides)
+                {
+                    <div class="item @(index == 0 ? "active" : "")">
+                        <img src="@prod.ImageSource" style="width:100%;">
+                    </div>
+                    index++;
+                }
+            }
 
-            <div class="item">
-                <img src="~/images/12.jpg" style="width:100%;">    
-            </div>
-
-            <div class="item">
-                <img src="~/images/13.jpg" style="width:100%;">    
-            </div>
-            <div class="item">
-                <img src="~/images/14.jpg" style="width:100%;">
-            </div>
-            <div class="item">
-                <img src="~/images/16.jpg" style="width:100%;">
-            </div>
         </div>
 
         <!-- Left and right controls -->
@@ -80,29 +79,29 @@
         @ViewBag.Info
     </div>
 
-   
-        @{int i = 0; }
-        @foreach (var category in Model)
+
+    @{int i = 0;
+    foreach (var category in Model)
+    {
+
+        if (i == 0 || i % 3 == 0)
         {
-
-            if (i == 0 || i % 3 == 0)
-            {
-                @Html.Raw("<div class=\"row\" >");
-            }
-            <div id="@category.Id" class="col-md-4 item-div" align="center">
-                <img style="width:100%; height:auto;" src="@category.ImageSource" />
-                <p>@category.Name</p>
-            </div>
-
-
-         
-            i++;
-            if (i != 0 && i % 3 == 0 || i == Model.Count)
-            {
-                @Html.Raw("</div>")
-            }
+            @Html.Raw("<div class=\"row\" >");
         }
-       
+        <div id="@category.Id" class="col-md-4 item-div" align="center">
+            <img style="width:100%; height:auto;" src="@category.ImageSource" />
+            <p>@category.Name</p>
+        </div>
+
+
+
+        i++;
+        if (i != 0 && i % 3 == 0 || i == Model.Count)
+        {
+            @Html.Raw("</div>")
+        }
+    }
+        }
 </div>
 
 <div align="right">

@@ -103,7 +103,7 @@ namespace LaserArt.DAO
             }
         }
 
-        public static Category saveProduct(Category newCategory)
+        public static Category saveCategory(Category newCategory)
         {
 
             using (SqlConnection sqlConnection = new SqlConnection(connectionString))
@@ -119,7 +119,7 @@ namespace LaserArt.DAO
                         else
                             command.Parameters.AddWithValue("@Id", newCategory.Id);
                         command.Parameters.AddWithValue("@CategoryName", newCategory.CategoryName);
-                        command.Parameters.AddWithValue("@CategoryImage", newCategory.CategoryImage);
+                        command.Parameters.AddWithValue("@CategoryImage", DBNull.Value);
                         command.Parameters.AddWithValue("@ParentCategoryId", newCategory.ParentCategoryId);
 
                         command.ExecuteNonQuery();

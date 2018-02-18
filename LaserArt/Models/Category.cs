@@ -24,7 +24,7 @@ namespace LaserArt.Models
 
         public Category SaveCategory()
         {
-            return CategoryDAO.saveProduct(this);
+            return CategoryDAO.saveCategory(this);
         }
 
         public static void DeleteCategory(int id)
